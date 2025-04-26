@@ -1,0 +1,10 @@
+.scrapy/
+*.sqlite3
+*.log
+
+output.json
+
+input_links.txt
+
+venv/
+__pycache__/
