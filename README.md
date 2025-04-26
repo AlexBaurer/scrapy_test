@@ -1,1 +1,1 @@
-# scrapy_test
+запуск scrapy crawl alko -O output.json
