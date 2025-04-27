@@ -1,14 +1,15 @@
 import scrapy
 import time
 import re
+import typing
 
 
 class AlkoSpider(scrapy.Spider):
     name = "alko"
     allowed_domains = ["alkoteka.com"]
-    start_urls = ["https://alkoteka.com/catalog/slaboalkogolnye-napitki-2", 
-                  "https://alkoteka.com/catalog/krepkiy-alkogol",
-                  "https://alkoteka.com/catalog/vino"]
+    start_urls: list[str] = ["https://alkoteka.com/catalog/slaboalkogolnye-napitki-2", 
+                             "https://alkoteka.com/catalog/krepkiy-alkogol",
+                             "https://alkoteka.com/catalog/vino"]
 
     city_uuid = "4a70f9e0-46ae-11e7-83ff-00155d026416"
 
@@ -20,7 +21,7 @@ class AlkoSpider(scrapy.Spider):
             yield scrapy.Request(i, callback=self.parse_category)
 
 
-    def build_categories(self):
+    def build_categories(self) -> list[str]:
         cat_names = [url.rstrip('/').split('/')[-1] for url in self.start_urls]
         xhr_urls = [f'https://alkoteka.com/web-api/v1/product?city_uuid={self.city_uuid}&page=1&per_page=10&root_category_slug={name}' for name in cat_names]
         return xhr_urls
